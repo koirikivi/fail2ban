@@ -10,7 +10,7 @@
 #export DH_VERBOSE=1
 
 %:
-	dh $@ --with python2,systemd
+	dh $@ --with python2
 
 DESTDIR=$(CURDIR)/debian/fail2ban
 
@@ -27,12 +27,6 @@ override_dh_install:
 	: # Install bash completion
 	install -d $(DESTDIR)/etc/bash_completion.d
 	install -m 644 files/bash-completion $(DESTDIR)/etc/bash_completion.d/fail2ban
-	: # Install systemd files
-	install -d $(DESTDIR)/lib/systemd/system
-	install -d $(DESTDIR)/usr/lib/tmpfiles.d
-	install -m 644 files/fail2ban.service $(DESTDIR)/lib/systemd/system
-	install -m 644 files/fail2ban-tmpfiles.conf $(DESTDIR)/usr/lib/tmpfiles.d
-	install -d $(DESTDIR)/lib/systemd/system
 	: # Install default jail enabler
 	install -m 644 debian/source/jail.d_defaults-debian.conf $(DESTDIR)/etc/fail2ban/jail.d/defaults-debian.conf
 	dh_install
